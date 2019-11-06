@@ -54,6 +54,7 @@ public class Attachable : MonoBehaviour
     public int parentPoint;
     private List<Transform> ListOfChildren;
 
+    public bool forceAttach;
     public bool attach;
     public bool detach;
     public bool explode;
@@ -146,18 +147,21 @@ public class Attachable : MonoBehaviour
             if (ParentPoint != null)
             {
                 attach = false;
-                attachValue[0] = 1;
-                attachValue[1] = 1;
-                attachValue[2] = 1;
-                attachValue[3] = 1;
-                attachValue[4] = 1;
-                attachValue[5] = 1;
-                ParentPoint.attachValue[0] = 1;
-                ParentPoint.attachValue[1] = 1;
-                ParentPoint.attachValue[2] = 1;
-                ParentPoint.attachValue[3] = 1;
-                ParentPoint.attachValue[4] = 1;
-                ParentPoint.attachValue[5] = 1;
+                if (forceAttach)
+                {
+                    attachValue[0] = 1;
+                    attachValue[1] = 1;
+                    attachValue[2] = 1;
+                    attachValue[3] = 1;
+                    attachValue[4] = 1;
+                    attachValue[5] = 1;
+                    ParentPoint.attachValue[0] = 1;
+                    ParentPoint.attachValue[1] = 1;
+                    ParentPoint.attachValue[2] = 1;
+                    ParentPoint.attachValue[3] = 1;
+                    ParentPoint.attachValue[4] = 1;
+                    ParentPoint.attachValue[5] = 1;
+                }
                 LockPositionToPoint(parentPoint, childPoint);
             }
         }
@@ -270,24 +274,29 @@ public class Attachable : MonoBehaviour
 
                     Vector3 localDirection = SetVectorToNorm(contactPoints[child]);
                     //Get offset vector3
+
                     // Vector3 offsetPoint = Vector3.Scale(contactDistance, contactDirection);
-                    Vector3 offsetPoint = new Vector3(contactDistance.x * contactDirection.x, contactDistance.y * contactDirection.y, contactDistance.z * contactDirection.z);
+                    //Vector3 offsetPoint = new Vector3(contactDistance.x * contactDirection.x, contactDistance.y * contactDirection.y, contactDistance.z * contactDirection.z);
 
-
+                    //offset = parent radius + child radius
+                    //Debug.Log(ParentPoint.contactPoints[parent] + offsetPoint);
+                    
                     //Set position to new point
 
                     //********************************************************************************//
                     //Logic: the child obj's position is relative to the parent obj's rotation
 
                     //gameObject.transform.position = ParentPoint.contactPoints[parent] + offsetPoint;//
-                    gameObject.transform.position = ParentPoint.transform.position+ contactDirection;//
+                    //gameObject.transform.position = ParentPoint.transform.position+ contactDirection;//
+                    gameObject.transform.position = ParentPoint.transform.position + Vector3.Scale(((ParentPoint.transform.localScale + transform.localScale) * 0.5f) , contactDirection);
 
-                    Debug.Log(ParentPoint.contactPoints[parent] + offsetPoint);
+
 
                     //Set rotation relative to both points
+                    
                     //gameObject.transform.rotation = Quaternion.LookRotation(SetVectorToNorm(contactPoints[child] - contactDirection), contactPoints[child]);
                     //gameObject.transform.rotation = Quaternion.LookRotation(-localDirection , ParentPoint.contactPoints[parent]);
-                    gameObject.transform.rotation = Quaternion.LookRotation(localDirection, -contactDirection);
+                    gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward, SetVectorToNorm(gameObject.transform.position- ParentPoint.transform.position));
 
                 }
             }

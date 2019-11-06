@@ -15,3 +15,5 @@ MonoBehaviour:
   itemType: 0
   itemName: Test Protocol
   attachValue: 000000000000000000000000000000000000000000000000
+  source:
+    elementType: 

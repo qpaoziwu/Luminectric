@@ -204,6 +204,16 @@ PrefabInstance:
       propertyPath: ParentPoint
       value: 
       objectReference: {fileID: 17154427}
+    - target: {fileID: 270896644857837936, guid: ee6ce4c8dc9c95149867bceb393cb3f8,
+        type: 3}
+      propertyPath: childPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 270896644857837936, guid: ee6ce4c8dc9c95149867bceb393cb3f8,
+        type: 3}
+      propertyPath: parentPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee6ce4c8dc9c95149867bceb393cb3f8, type: 3}
 --- !u!114 &136530811 stripped
@@ -380,6 +390,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 270896644857837936, guid: ee6ce4c8dc9c95149867bceb393cb3f8,
+        type: 3}
+      propertyPath: childPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 270896644857837936, guid: ee6ce4c8dc9c95149867bceb393cb3f8,
+        type: 3}
+      propertyPath: parentPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee6ce4c8dc9c95149867bceb393cb3f8, type: 3}
 --- !u!1001 &1339444066
@@ -454,6 +474,11 @@ PrefabInstance:
       propertyPath: ParentPoint
       value: 
       objectReference: {fileID: 136530811}
+    - target: {fileID: 318198726701785432, guid: 8366727e773348b448ec1d1ee8ce7190,
+        type: 3}
+      propertyPath: parentPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8366727e773348b448ec1d1ee8ce7190, type: 3}
 --- !u!1001 &1382549462
@@ -528,6 +553,11 @@ PrefabInstance:
       propertyPath: ParentPoint
       value: 
       objectReference: {fileID: 307391693}
+    - target: {fileID: 318198726701785432, guid: 8366727e773348b448ec1d1ee8ce7190,
+        type: 3}
+      propertyPath: parentPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8366727e773348b448ec1d1ee8ce7190, type: 3}
 --- !u!1001 &1894039742
@@ -602,6 +632,11 @@ PrefabInstance:
       propertyPath: ParentPoint
       value: 
       objectReference: {fileID: 2129157619}
+    - target: {fileID: 318198726701785432, guid: 8366727e773348b448ec1d1ee8ce7190,
+        type: 3}
+      propertyPath: parentPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8366727e773348b448ec1d1ee8ce7190, type: 3}
 --- !u!114 &2129157619 stripped

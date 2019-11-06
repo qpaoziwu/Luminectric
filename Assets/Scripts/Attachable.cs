@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Attachable : MonoBehaviour
 {
-    //Item Infos
+
+    //Item Infos///////////////////////////////////////////////////////////////////
     public AttachableScriptableData ObjectData; //Reading Object Data
     [System.Serializable]
     public enum ItemType
@@ -18,13 +19,15 @@ public class Attachable : MonoBehaviour
     }
     public ItemType itemType;
     public string itemName;
+    
 
-    //Value for offsets
+    //Value for offsets///////////////////////////////////////////////////////////
     public float xRadius;
     public float yRadius;
     public float zRadius;
+    
 
-    //Points of the attach points
+    //Points of the attach points/////////////////////////////////////////////////
     public Vector3[] contactPoints;
     [Range(0, 1)]
     public int[] attachValue; // Current Attach Status
@@ -32,23 +35,29 @@ public class Attachable : MonoBehaviour
     [Range(0, 1)]
     int[] defaultValue; //Default Attach Status
 
-    public bool root;
 
+    //Root determines if obj is an independent obj
+    public bool root;
 
 
     //gameObject will set parent to this gameObject
     public Attachable ParentPoint;
     public GameObject Waypoint;
 
+
+    //Variables for Debug functions//////////////////////////////////////////////
     //Local Point
     [Range(0, 5)]
     public int childPoint;
-
     //Target Point
     [Range(0, 5)]
     public int parentPoint;
+    private List<Transform> ListOfChildren;
 
-    public bool confirm;
+    public bool attach;
+    public bool detach;
+    public bool explode;
+
 
     void Start()
     {
@@ -65,7 +74,6 @@ public class Attachable : MonoBehaviour
         //if root = true, then the object has a base
         RootCheck();
     }
-
     private void Update()
     {
         //Set 6 Sides
@@ -79,9 +87,11 @@ public class Attachable : MonoBehaviour
         //ReadObjectData();
         //StoreAttachValue();
         //SetItemType();
-        PrintNameWithValue();
-        LockPositionToPoint(parentPoint, childPoint);
-        MoveThisObject();
+        //PrintNameWithValue();
+        //LockPositionToPoint(parentPoint, childPoint);
+        MoveThisObjectWithConfirm();
+        Unparent();
+        ExplodeChildren();
         Debug.DrawRay(transform.position, contactPoints[2]*3, Color.red);
         Debug.DrawRay(transform.position, contactPoints[1]*3, Color.green);
 
@@ -89,13 +99,62 @@ public class Attachable : MonoBehaviour
 
     }
 
-    void MoveThisObject()
+
+    //Debug Functions////////////////////////////////////////////////////////////
+    void Unparent()
     {
-        //if (confirm)
+        //To Do: Unparent this object and reset Attach Value
+        if (detach)
+        {
+            detach = false;
+            if (gameObject.transform.parent != null)
+            {
+                gameObject.transform.parent = null;
+            }
+        }
+    }
+    void ExplodeChildren()
+    {
+        if (explode)
+        {
+            explode = false;
+
+            //
+            if (ListOfChildren.Count > 0)
+            {
+                foreach (Transform child in ListOfChildren)
+                {
+                    child.parent = null;
+                }
+            }
+
+        }
+        
+    } // TO DO ///////////////////////////////////////////////
+    //private void GetChildRecursive(Transform obj)
+    //{
+    //    if (null == obj)
+    //        return;
+
+    //    foreach (Transform child in gameObject.transform)
+    //    {
+    //        if (null == child)
+    //            continue;
+
+    //        ListOfChildren.Add(child);
+    //        GetChildRecursive(child);
+    //    }
+
+    //}
+
+        //This Debug function moves the object with the Confirm Boolean 
+    void MoveThisObjectWithConfirm()
+    {
+        if (attach)
         {
             if (ParentPoint != null)
             {
-                confirm = false;
+                attach = false;
                 attachValue[0] = 1;
                 attachValue[1] = 1;
                 attachValue[2] = 1;
@@ -108,11 +167,11 @@ public class Attachable : MonoBehaviour
                 ParentPoint.attachValue[3] = 1;
                 ParentPoint.attachValue[4] = 1;
                 ParentPoint.attachValue[5] = 1;
+                LockPositionToPoint(parentPoint, childPoint);
             }
         }
 
     }
-    //Debug Function
     void PrintNameWithValue()
     {
         Debug.Log(itemName + ": " 
@@ -120,7 +179,8 @@ public class Attachable : MonoBehaviour
             + attachValue[3] + attachValue[4] + attachValue[5]);
     }
 
-    //Get object radius and set the Attachable Points
+
+    //Get object radius and set the Attachable Points////////////////////////////
     void GetRadius()
     {
         xRadius = gameObject.transform.localScale.x / 2f;
@@ -139,7 +199,7 @@ public class Attachable : MonoBehaviour
         contactPoints[5] = new Vector3(xRadius, 0, 0); //Right
     }
 
-    //Get Scriptable Object data and store values to local
+    //Get Scriptable Object data and store values to local///////////////////////
     void ReadObjectData()
     {
         if (ObjectData != null)
@@ -179,13 +239,19 @@ public class Attachable : MonoBehaviour
         }
     }
 
-    //Set Obj to parent and move it to the port
+
+    //Set Obj to parent and move it to the port//////////////////////////////////
     void LockPositionToPoint(int parent, int child)
     {
+        //To Do: Get parent one hierachy higher not root parent
+        //Transform.childCount?
+
         if (ParentPoint != null) {
-            //Check if is valid
+            //Check if point is valid
             if (ParentPoint.contactPoints[parent] != Vector3.zero)
             {
+
+
                 //Check if both points are usable
                 if (ParentPoint.attachValue[parent] == 1 && attachValue[child] == 1)
                 {
@@ -193,12 +259,18 @@ public class Attachable : MonoBehaviour
                     ParentPoint.attachValue[parent] = 0;
                     attachValue[child] = 0;
 
+
+
+
                     if (gameObject.transform.parent != ParentPoint.gameObject.transform)
                     {
                         print("Setting " + gameObject.name+ " as child of "+ ParentPoint.gameObject.name);
                         //Set new parent
                         gameObject.transform.SetParent(ParentPoint.gameObject.transform);
                     }
+
+
+
                     //Get offset distance
                     Vector3 contactDistance = new Vector3(Mathf.Abs(contactPoints[child].x), Mathf.Abs(contactPoints[child].y), Mathf.Abs(contactPoints[child].z));
 
@@ -211,10 +283,13 @@ public class Attachable : MonoBehaviour
                     Vector3 offsetPoint = new Vector3(contactDistance.x * contactDirection.x, contactDistance.y * contactDirection.y, contactDistance.z * contactDirection.z);
 
 
-
                     //Set position to new point
+
+                    //********************************************************************************//
+                    //Logic: the child obj's position is relative to the parent obj's rotation
+
                     //gameObject.transform.position = ParentPoint.contactPoints[parent] + offsetPoint;//
-                    gameObject.transform.position = contactDirection;//
+                    gameObject.transform.position = ParentPoint.transform.position+ contactDirection;//
 
                     Debug.Log(ParentPoint.contactPoints[parent] + offsetPoint);
 
@@ -226,10 +301,8 @@ public class Attachable : MonoBehaviour
                 }
             }
         }
-
     }
-
-    //This function set incVector to -1 0 1
+    //This function set incVector to -1 0 1//////////////////////////////////////
     Vector3 SetVectorToNorm(Vector3 incVector)
     {
         Vector3 outVector3 = Vector3.zero;
@@ -275,6 +348,8 @@ public class Attachable : MonoBehaviour
         return outVector3;
     }
 
+    //TO DO//////////////////////////////////////////////////////////////////////
+    //Purpose of this function is to determine which rotation the obj should use
     void PairAttachPoint()
     {
         // if this pairing point is 

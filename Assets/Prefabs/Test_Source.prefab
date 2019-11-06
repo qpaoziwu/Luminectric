@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eab537fb2b8a4534fb2e82d3569e9b6e, type: 2}
+  - {fileID: 2100000, guid: a112925c58e85e04ea148910f01a45ab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,4 +125,6 @@ MonoBehaviour:
   Waypoint: {fileID: 0}
   childPoint: 4
   parentPoint: 3
-  confirm: 0
+  attach: 0
+  detach: 0
+  explode: 0

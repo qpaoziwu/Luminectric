@@ -119,35 +119,26 @@ public class Attachable : MonoBehaviour
         {
             explode = false;
 
-            //
-            if (ListOfChildren.Count > 0)
+            //Get child then get that child and unparent
+            if (ListOfChildren.Count <= 0)
             {
-                foreach (Transform child in ListOfChildren)
+                //Loop1 Get all child
+                //Add all child obj to ListOfChildren
+                foreach (Transform child in gameObject.transform)
                 {
+                    ListOfChildren.Add(child);
+                    child.GetComponentInChildren<Attachable>().explode = true;
                     child.parent = null;
                 }
+                
             }
-
+            ListOfChildren.Clear();
         }
         
-    } // TO DO ///////////////////////////////////////////////
-    //private void GetChildRecursive(Transform obj)
-    //{
-    //    if (null == obj)
-    //        return;
+    }
+    
 
-    //    foreach (Transform child in gameObject.transform)
-    //    {
-    //        if (null == child)
-    //            continue;
-
-    //        ListOfChildren.Add(child);
-    //        GetChildRecursive(child);
-    //    }
-
-    //}
-
-        //This Debug function moves the object with the Confirm Boolean 
+    //This Debug function moves the object with the Confirm Boolean 
     void MoveThisObjectWithConfirm()
     {
         if (attach)

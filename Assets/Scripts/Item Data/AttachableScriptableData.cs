@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AttachableObject")]
 public class AttachableScriptableData : ScriptableObject
 {
+
     public enum ItemType
     {
         Source,
@@ -14,17 +15,20 @@ public class AttachableScriptableData : ScriptableObject
         Shell,
         Protocol
     }
-
     public ItemType itemType;
     public string itemName;
     [Range(0, 1)]
     public int[] attachValue = new int[6];
 
+    //Setup for GUI////////////////////////////////////////////////
     public SourceType source = new SourceType();
     public MediumType medium = new MediumType();
     public OutputType output = new OutputType();
     public ShellType shell = new ShellType();
     public ProtocolType protocol = new ProtocolType();
+
+
+    //Edit below to add variables//////////////////////////////////
 
     [Serializable]
     public class SourceType 

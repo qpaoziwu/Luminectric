@@ -12,8 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27c11fb0180ba14cb8f2e5dd192b75c, type: 3}
   m_Name: Test_Protocol
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemType: 4
   itemName: Test Protocol
   attachValue: 000000000000000000000000000000000000000000000000
   source:
     elementType: 
+    damage: 0
+  medium:
+    inputType: 
+  output:
+    size: 0
+    quantity: 0
+    shape: 
+    projectileSpeed: 0
+    fireRate: 0
+    bounce: 0
+  shell:
+    elementType: 
+    material: {fileID: 0}
+  protocol:
+    travelSpeedMod: 0
+    travelDirection: {fileID: 0}
+    destination: {fileID: 0}

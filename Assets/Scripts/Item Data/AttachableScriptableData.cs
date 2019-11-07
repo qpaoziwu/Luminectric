@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Attachable/Default Item")]
+[CreateAssetMenu(menuName = "AttachableObject")]
 public class AttachableScriptableData : ScriptableObject
 {
     public enum ItemType
@@ -21,50 +21,56 @@ public class AttachableScriptableData : ScriptableObject
     public int[] attachValue = new int[6];
 
     public SourceType source = new SourceType();
+    public MediumType medium = new MediumType();
+    public OutputType output = new OutputType();
+    public ShellType shell = new ShellType();
+    public ProtocolType protocol = new ProtocolType();
 
     [Serializable]
     public class SourceType 
     {
         public string elementType;
+        public int damage;
+
     }
 
 
+    [Serializable]
+    public class MediumType
+    {
+        public string inputType;
 
-    public SourceType medium = new SourceType();
+    }
+
 
     [Serializable]
     public class OutputType
     {
-        public string elementType;
+        public float size;
+        public int quantity;
+        public string shape;
+        public float projectileSpeed;
+        public float fireRate;
+        public int bounce;
     }
 
 
-    public SourceType output = new SourceType();
-
     [Serializable]
-    public class SourceType
+    public class ShellType
     {
         public string elementType;
+        public Material material;
+
     }
 
 
-
-    public SourceType shell = new SourceType();
-
     [Serializable]
-    public class SourceType
+    public class ProtocolType
     {
-        public string elementType;
-    }
+        public float travelSpeedMod;
+        public Transform travelDirection;
+        public Transform destination;
 
 
-
-    public SourceType source = new SourceType();
-
-    [Serializable]
-    public class SourceType
-    {
-        public string elementType;
     }
 }
-

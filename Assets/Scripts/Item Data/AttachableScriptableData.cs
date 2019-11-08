@@ -19,6 +19,9 @@ public class AttachableScriptableData : ScriptableObject
     public string itemName;
     [Range(0, 1)]
     public int[] attachValue = new int[6];
+    [Range(0, 5)]
+    public int itemRarity;
+
 
     //Setup for GUI////////////////////////////////////////////////
     public SourceType source = new SourceType();
@@ -74,7 +77,7 @@ public class AttachableScriptableData : ScriptableObject
         public float travelSpeedMod;
         public Transform travelDirection;
         public Transform destination;
-
+        public List<Transform> travelPath;
 
     }
 }

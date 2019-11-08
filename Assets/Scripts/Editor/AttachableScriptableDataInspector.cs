@@ -8,11 +8,14 @@ public class AttachableScriptableDataInspector : Editor
         SerializedProperty itemType = serializedObject.FindProperty("itemType");
         SerializedProperty itemName = serializedObject.FindProperty("itemName");
         SerializedProperty attachValue = serializedObject.FindProperty("attachValue");
+        SerializedProperty itemRarity = serializedObject.FindProperty("itemRarity");
 
 
         EditorGUILayout.PropertyField(itemType);
         EditorGUILayout.PropertyField(itemName);
         EditorGUILayout.PropertyField(attachValue, true);
+        EditorGUILayout.PropertyField(itemRarity);
+
 
         if (itemType.enumValueIndex == 0)
         {

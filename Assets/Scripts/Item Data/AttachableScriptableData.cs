@@ -46,9 +46,9 @@ public class AttachableScriptableData : ScriptableObject
     public class MediumType
     {
         public string inputType;
-
+        public float inputRate;
     }
-
+    
 
     [Serializable]
     public class OutputType

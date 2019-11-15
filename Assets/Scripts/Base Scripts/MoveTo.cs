@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[ExecuteInEditMode]
 public class MoveTo : MonoBehaviour
 {
     public Transform destination;
@@ -12,7 +12,7 @@ public class MoveTo : MonoBehaviour
     public float speed;
     [Range (1, 100)]
     public float chaseSpeed;
-    [Range(1, 5)]
+    [Range(1, 20)]
     public float positionThreshold;
 
     public bool flipLookDir;
@@ -36,7 +36,7 @@ public class MoveTo : MonoBehaviour
         {
             if (moving)
             {
-                transform.position += distanceDir * Time.deltaTime * speed;
+                transform.position += distanceDir * Time.deltaTime * speed*10;
             }
 
             if (looking)

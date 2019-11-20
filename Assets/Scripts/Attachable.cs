@@ -259,7 +259,7 @@ public class Attachable : MonoBehaviour
 
                     if (gameObject.transform.parent != ParentPoint.gameObject.transform)
                     {
-                        print("Setting " + gameObject.name+ " as child of "+ ParentPoint.gameObject.name);
+                        print("Setting " + gameObject.name + " as child of " + ParentPoint.gameObject.name);
                         //Set new parent
                         gameObject.transform.SetParent(ParentPoint.gameObject.transform);
                     }
@@ -280,7 +280,7 @@ public class Attachable : MonoBehaviour
 
                     //offset = parent radius + child radius
                     //Debug.Log(ParentPoint.contactPoints[parent] + offsetPoint);
-                    
+
                     //Set position to new point
 
                     //********************************************************************************//
@@ -288,16 +288,18 @@ public class Attachable : MonoBehaviour
 
                     //gameObject.transform.position = ParentPoint.contactPoints[parent] + offsetPoint;//
                     //gameObject.transform.position = ParentPoint.transform.position+ contactDirection;//
-                    gameObject.transform.position = ParentPoint.transform.position + Vector3.Scale(((ParentPoint.transform.localScale + transform.localScale) * 0.5f) , contactDirection);
+                    gameObject.transform.position = ParentPoint.transform.position + Vector3.Scale(((ParentPoint.transform.localScale + transform.localScale) * 0.5f), contactDirection);
 
 
 
                     //Set rotation relative to both points
-                    
+
                     //gameObject.transform.rotation = Quaternion.LookRotation(SetVectorToNorm(contactPoints[child] - contactDirection), contactPoints[child]);
                     //gameObject.transform.rotation = Quaternion.LookRotation(-localDirection , ParentPoint.contactPoints[parent]);
-                    gameObject.transform.rotation = Quaternion.LookRotation(Vector3.forward, SetVectorToNorm(gameObject.transform.position- ParentPoint.transform.position));
+                    gameObject.transform.rotation = Quaternion.LookRotation(Vector3.Cross(transform.position, contactPoints[child]), localDirection);
 
+                    //Vector3.Cross(ParentPoint.transform.position, contactPoints[child]));
+                    //, 
                 }
             }
         }
